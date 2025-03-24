@@ -1,51 +1,57 @@
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 class Project_Jason_Pasewaldt {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-         //Demo for policy and using word for word what the sample output requests
-        System.out.print("Please enter the Policy Number: ");
-        int policyNumber = scanner.nextInt();
-        scanner.nextLine(); 
+        public static void main(String[] args) {
+        ArrayList<Policy> policies = new ArrayList<>();
+        int smokerCount = 0;
+        int nonSmokerCount = 0;
 
-        System.out.print("Please enter the Provider Name: ");
-        String providerName = scanner.nextLine();
+        try {
+            Scanner fileScanner = new Scanner(new File("PolicyInformation.txt"));
 
-        System.out.print("Please enter the Policyholder’s First Name: ");
-        String firstName = scanner.nextLine();
+            while (fileScanner.hasNext()) {
+                int policyNumber = Integer.parseInt(fileScanner.nextLine());
+                String providerName = fileScanner.nextLine();
+                String firstName = fileScanner.nextLine();
+                String lastName = fileScanner.nextLine();
+                int age = Integer.parseInt(fileScanner.nextLine());
+                String smokingStatus = fileScanner.nextLine();
+                double height = Double.parseDouble(fileScanner.nextLine());
+                double weight = Double.parseDouble(fileScanner.nextLine());
 
-        System.out.print("Please enter the Policyholder’s Last Name: ");
-        String lastName = scanner.nextLine();
+                Policy policy = new Policy(policyNumber, providerName, firstName, lastName, age, smokingStatus, height, weight);
+                policies.add(policy);
 
-        System.out.print("Please enter the Policyholder’s Age: ");
-        int age = scanner.nextInt();
-        scanner.nextLine();
+                if (smokingStatus.equalsIgnoreCase("smoker")) {
+                    smokerCount++;
+                } else {
+                    nonSmokerCount++;
+                }
+            }
 
-        System.out.print("Please enter the Policyholder’s Smoking Status (smoker/non-smoker): ");
-        String smokingStatus = scanner.nextLine();
+            fileScanner.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: File not found.");
+            return;
+        }
 
-        System.out.print("Please enter the Policyholder’s Height (in inches): ");
-        double height = scanner.nextDouble();
+        for (Policy policy : policies) {
+            System.out.println("\nPolicy Number: " + policy.getPolicyNumber());
+            System.out.println("Provider Name: " + policy.getProviderName());
+            System.out.println("Policyholder's First Name: " + policy.getFirstName());
+            System.out.println("Policyholder's Last Name: " + policy.getLastName());
+            System.out.println("Policyholder's Age: " + policy.getAge());
+            System.out.println("Policyholder's Smoking Status (smoker/non-smoker): " + policy.getSmokingStatus());
+            System.out.println("Policyholder's Height: " + policy.getHeight() + " inches");
+            System.out.println("Policyholder's Weight: " + policy.getWeight() + " pounds");
+            System.out.printf("Policyholder's BMI: %.2f%n", policy.calculateBMI());
+            System.out.printf("Policy Price: $%.2f%n", policy.calculatePolicyPrice());
+        }
 
-        System.out.print("Please enter the Policyholder’s Weight (in pounds): ");
-        double weight = scanner.nextDouble();
-
-        Policy policy = new Policy(policyNumber, providerName, firstName, lastName, age, smokingStatus, height, weight);
-         //using the info gathered from demo class and combining it with policy class code to create a return
-        System.out.println("\nPolicy Number: " + policy.getPolicyNumber());
-        System.out.println("Provider Name: " + policy.getProviderName());
-        System.out.println("Policyholder \' s First Name: " + policy.getFirstName());
-        System.out.println("Policyholder \' s Last Name: " + policy.getLastName());
-        System.out.println("Policyholder \' s Age: " + policy.getAge());
-        System.out.println("Policyholder \' s Smoking Status: " + policy.getSmokingStatus());
-        System.out.println("Policyholder \' s Height: " + policy.getHeight() + " inches");
-        System.out.println("Policyholder \' s Weight: " + policy.getWeight() + " pounds");
-        System.out.printf("Policyholder \' s BMI: %.2f%n", policy.calculateBMI());
-        System.out.printf("Policy Price: $%.2f%n", policy.calculatePolicyPrice());
-        /*I have tried using the unicode and the escape character to make these apostrophes not show up as AE in the run code
-        I do not know if I am doing something wrong OR Jgrasp has a formatting issue but I might be dumb in this situation or there
-        is something completely obvious i am missing, I unfortunately will have to take points for this because I am doing this an hour and a half before its due :) */
-        scanner.close();
+        System.out.println("\nThe number of policies with a smoker is: " + smokerCount);
+        System.out.println("The number of policies with a non-smoker is: " + nonSmokerCount);
     }
-    
 }
