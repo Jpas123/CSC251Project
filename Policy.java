@@ -20,8 +20,17 @@ public class Policy {
         height = 0.0;
         weight = 0.0;
     }
-
-    // accepting arguments 
+ 
+    /* Full constructor
+    @param Policy Number
+    @param Provider Name
+    @param First Name
+    @param Last Name
+    @param age
+    @param Smoking Status
+    @param Height
+    @param Weight
+    */
     public Policy(int policyNumber, String providerName, String firstName, String lastName, int age, String smokingStatus, double height, double weight) {
         this.policyNumber = policyNumber;
         this.providerName = providerName;
@@ -58,12 +67,18 @@ public class Policy {
     public double getWeight() { return weight; }
     public void setWeight(double weight) { this.weight = weight; }
 
-    // BMI calculation
+    /*
+    Calculation of BMI
+    @return BMI
+    */
     public double calculateBMI() {
         return (weight * 703) / (height * height);
     }
 
-    // policy price calculation and restraints on age, smoking, and bmi
+    /*
+    Calculations of price of policy, smoking, and BMI
+    @return price of the policy
+    */
     public double calculatePolicyPrice() {
         double price = 600.0;
 
