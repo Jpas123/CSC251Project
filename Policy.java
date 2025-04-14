@@ -42,6 +42,13 @@ class Policy {
         return policyCount;
     }
 
-    
+    @Override
+    public String toString() {
+        return "Policy Number: " + policyNumber + "\n" +
+               "Provider Name: " + providerName + "\n" +
+               policyHolder.toString() + 
+               String.format("Policy Price: $%.2f\n", calculatePolicyPrice());
+    }
 }
+
 //I do not know if you still wanted the comments but since I was moving stuff I just deleted them//
