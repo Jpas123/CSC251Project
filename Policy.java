@@ -2,7 +2,7 @@ class Policy {
     private int policyNumber;
     private String providerName;
     private PolicyHolder policyHolder;
-    private static int policyCount = 0;
+    private static int policyCount = 0; //step 3
 
     public Policy(int policyNumber, String providerName, PolicyHolder policyHolder) {
         this.policyNumber = policyNumber;
@@ -15,9 +15,9 @@ class Policy {
             policyHolder.getHeight(),
             policyHolder.getWeight()
         );
-        policyCount++;
+        policyCount++; //step 3
     }
-
+     //security for step 5 to prevent from modifying original
     public int getPolicyNumber() { return policyNumber; }
     public String getProviderName() { return providerName; }
     public PolicyHolder getPolicyHolder() { return new PolicyHolder(
@@ -27,7 +27,8 @@ class Policy {
         policyHolder.getSmokingStatus(),
         policyHolder.getHeight(),
         policyHolder.getWeight()
-    ); }
+    ); 
+    }
 
     public double calculatePolicyPrice() {
         double price = 600.0;
