@@ -1,102 +1,55 @@
-public class Policy {
-    //laying out my variables/attributes
+class Policy {
     private int policyNumber;
     private String providerName;
-    private String firstName;
-    private String lastName;
-    private int age;
-    private String smokingStatus;
-    private double height;
-    private double weight;
+    private PolicyHolder policyHolder;
+    private static int policyCount = 0; //step 3
 
-    // default value for all fields (no-arg constructor)
-    public Policy() {
-        policyNumber = 0;
-        providerName = "";
-        firstName = "";
-        lastName = "";
-        age = 0;
-        smokingStatus = "non-smoker";
-        height = 0.0;
-        weight = 0.0;
-    }
- 
-    /* Full constructor
-    @param Policy Number
-    @param Provider Name
-    @param First Name
-    @param Last Name
-    @param age
-    @param Smoking Status
-    @param Height
-    @param Weight
-    */
-    public Policy(int policyNumber, String providerName, String firstName, String lastName, int age, String smokingStatus, double height, double weight) {
+    public Policy(int policyNumber, String providerName, PolicyHolder policyHolder) {
         this.policyNumber = policyNumber;
         this.providerName = providerName;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
-        this.smokingStatus = smokingStatus;
-        this.height = height;
-        this.weight = weight;
+        this.policyHolder = new PolicyHolder(
+            policyHolder.getFirstName(),
+            policyHolder.getLastName(),
+            policyHolder.getAge(),
+            policyHolder.getSmokingStatus(),
+            policyHolder.getHeight(),
+            policyHolder.getWeight()
+        );
+        policyCount++; //step 3
     }
-
-    // my getters and setters
+     //security for step 5 to prevent from modifying original
     public int getPolicyNumber() { return policyNumber; }
-    public void setPolicyNumber(int policyNumber) { this.policyNumber = policyNumber; }
-
     public String getProviderName() { return providerName; }
-    public void setProviderName(String providerName) { this.providerName = providerName; }
-
-    public String getFirstName() { return firstName; }
-    public void setFirstName(String firstName) { this.firstName = firstName; }
-
-    public String getLastName() { return lastName; }
-    public void setLastName(String lastName) { this.lastName = lastName; }
-
-    public int getAge() { return age; }
-    public void setAge(int age) { this.age = age; }
-
-    public String getSmokingStatus() { return smokingStatus; }
-    public void setSmokingStatus(String smokingStatus) { this.smokingStatus = smokingStatus; }
-
-    public double getHeight() { return height; }
-    public void setHeight(double height) { this.height = height; }
-
-    public double getWeight() { return weight; }
-    public void setWeight(double weight) { this.weight = weight; }
-
-    /*
-    Calculation of BMI
-    @return BMI
-    */
-    public double calculateBMI() {
-        return (weight * 703) / (height * height);
+    public PolicyHolder getPolicyHolder() { return new PolicyHolder(
+        policyHolder.getFirstName(),
+        policyHolder.getLastName(),
+        policyHolder.getAge(),
+        policyHolder.getSmokingStatus(),
+        policyHolder.getHeight(),
+        policyHolder.getWeight()
+    ); 
     }
 
-    /*
-    Calculations of price of policy, smoking, and BMI
-    @return price of the policy
-    */
     public double calculatePolicyPrice() {
         double price = 600.0;
-
-        if (age > 50) {
-            price += 75.0;
-        }
-
-        if (smokingStatus.equalsIgnoreCase("smoker")) {
-            price += 100.0;
-        }
-
-        double bmi = calculateBMI();
-        if (bmi > 35) {
-            price += (bmi - 35) * 20;
-        }
-   //final piece showing price for user
+        if (policyHolder.getAge() > 50) price += 75.0;
+        if (policyHolder.getSmokingStatus().equalsIgnoreCase("smoker")) price += 100.0;
+        double bmi = policyHolder.calculateBMI();
+        if (bmi > 35) price += (bmi - 35) * 20;
         return price;
     }
-    
-    
+
+    public static int getPolicyCount() {
+        return policyCount;
+    }
+
+    @Override
+    public String toString() {
+        return "Policy Number: " + policyNumber + "\n" +
+               "Provider Name: " + providerName + "\n" +
+               policyHolder.toString() + 
+               String.format("Policy Price: $%.2f\n", calculatePolicyPrice());
+    }
 }
+
+//I do not know if you still wanted the comments but since I was moving stuff I just deleted them//
