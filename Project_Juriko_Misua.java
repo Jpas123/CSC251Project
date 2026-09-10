@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-public class Project_Jason_Pasewaldt {
+public class Project_Juriko_Misua {
         public static void main(String[] args) {
         ArrayList<Policy> policies = new ArrayList<>();
         int smokerCount = 0;
